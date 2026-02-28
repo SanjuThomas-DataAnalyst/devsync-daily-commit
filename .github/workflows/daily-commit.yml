@@ -1,0 +1,28 @@
+name: DevSync Daily Commit
+
+on:
+  schedule:
+    - cron: '15 5 * * *'
+  workflow_dispatch:
+
+jobs:
+  commit-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Step with email 24ds1000027@ds.study.iitm.ac.in
+        run: echo "Running scheduled job"
+
+      - name: Create log file
+        run: echo "Updated on $(date)" >> log.txt
+
+      - name: Commit changes
+        run: |
+          git config user.name "DevSync Bot"
+          git config user.email "24ds1000027@ds.study.iitm.ac.in"
+          git add log.txt
+          git commit -m "Daily automated commit"
+          git push
